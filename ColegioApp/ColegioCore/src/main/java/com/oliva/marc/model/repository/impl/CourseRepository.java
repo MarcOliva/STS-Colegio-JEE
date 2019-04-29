@@ -10,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import com.oliva.marc.model.entity.Course;
+import com.oliva.marc.model.entity.EducationDegree;
 import com.oliva.marc.model.repository.ICourseRepository;
 
 @Named
@@ -56,5 +57,14 @@ public class CourseRepository implements ICourseRepository, Serializable {
 		courses = query.getResultList();
 
 		return courses != null && !courses.isEmpty() ?courses.get(0) : new Course();
+	}
+
+	@Override
+	public List<Course> findByGradeId(int id) throws Exception {
+		List<Course> courses = new ArrayList<>();
+		TypedQuery<Course> query = em.createQuery("SELECT c FROM Courses c WHERE c.id in (SELECT DISTINCT course.id FROM TeacherSchedule WHERE educationDegree.id = ?1 )", Course.class);
+		query.setParameter(1, id);
+		courses = query.getResultList();
+		return courses;
 	}
 }

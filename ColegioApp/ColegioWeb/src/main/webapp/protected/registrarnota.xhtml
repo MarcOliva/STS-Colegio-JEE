@@ -28,15 +28,31 @@
 
 		</p:tabMenu>
 		<br></br>
-		<p:selectOneMenu id="cmbCate" required="true" effect="drop"
-			value="#{teacherScheduleController.gradeSelec}"
+		<p:selectOneMenu id="cmbGrade" required="true" effect="drop"
+			value="#{courseController.gradeSelec}"
 			converter="omnifaces.SelectItemsConverter">
 			<f:selectItem itemLabel="Seleccione una opción"
 				noSelectionOption="true" itemValue="" />
 			<f:selectItems value="#{teacherScheduleController.grades}"
 				var="Grade" itemLabel="#{Grade.grade}" itemValue="#{Grade}" />
+			<f:ajax render="ajaxTarget" />
 		</p:selectOneMenu>
-		<p:commandButton value="Buscar" actionListener="#{teacherScheduleController.loadStudents()}" update="datTabStu" />
+		<br></br>
+		<br></br>
+		<p:outputPanel id="ajaxTarget">
+			<p:selectOneMenu id="cmbCourse" required="true" effect="drop"
+				value="#{courseController.courseSelec}"
+				converter="omnifaces.SelectItemsConverter">
+				<f:selectItem itemLabel="Seleccione una opción"
+					noSelectionOption="true" itemValue="" />
+				<f:selectItems value="#{courseController.courses}" var="Course"
+					itemLabel="#{Course.name}" itemValue="#{Course}" />
+			</p:selectOneMenu>
+		</p:outputPanel>
+
+		<p:commandButton value="Buscar"
+			actionListener="#{teacherScheduleController.loadStudents()}"
+			update="datTabStu" />
 		<br></br>
 		<br></br>
 		<p:dataTable id="datTabStu" emptyMessage="No existen alumnos"

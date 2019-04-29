@@ -46,4 +46,9 @@ public class CourseService implements ICourseService, Serializable {
 	public Course findById(Course t) throws Exception {
 		return courseRepository.findById(t);
 	}
+
+	@Override
+	public List<Course> findByGradeId(int id) throws Exception {
+		return courseRepository.findByGradeId(id);
+	}
 }
