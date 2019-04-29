@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+</h:head>
+<body>
+
+	<h:form>
+		<p:tabMenu activeIndex="#{param.i}">
+			<p:menuitem value="Registrar Notas" icon="pi pi-star"
+				outcome="/faces/protected/registrarnota">
+				<f:param name="i" value="0" />
+			</p:menuitem>
+			<p:menuitem value="Tomar Asistencia" icon="pi pi-search"
+				outcome="/faces/protected/tomarasistencia">
+				<f:param name="i" value="1" />
+			</p:menuitem>
+			<p:menuitem value="Solicitudes" icon="pi pi-file"
+				outcome="/faces/protected/registrarnota">
+				<f:param name="i" value="2" />
+			</p:menuitem>
+
+		</p:tabMenu>
+
+		<br></br>
+		<p:dataTable id="datTabPro" emptyMessage="No existen alumnos" value="#{teacherScheduleController.students}"
+			var="stu" rows="10" selectionMode="single" rowKey="">
+			<f:facet name="header">
+				<p:outputLabel value="Lista de Alumnos" />
+			</f:facet>
+			<p:column headerText="Apellidos">
+				<p:outputLabel value="stu.maternal_lastname" />
+			</p:column>
+			<p:column headerText="Nombres">
+				<p:outputLabel value="stu.name" />
+			</p:column>
+			<p:column headerText="Asistencia">
+				<p:selectOneRadio id="console" value=""
+					unselectable="true">
+				</p:selectOneRadio>
+			</p:column>
+
+		</p:dataTable>
+		
+		
+		<p:separator></p:separator>
+	</h:form>
+
+</body>
+</html>
