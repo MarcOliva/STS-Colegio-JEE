@@ -40,8 +40,8 @@ public class Teacher implements Serializable {
 	private Integer phone;
 	
 	@ManyToOne
-	@JoinColumn(name = "education_level_id", nullable = false)
-	private EducationLevel educationLevel;
+	@JoinColumn(name = "education_degree_id", nullable = false)
+	private EducationDegree educationDegree;
 
 	public Integer getId() {
 		return id;
@@ -99,11 +99,11 @@ public class Teacher implements Serializable {
 		this.phone = phone;
 	}
 
-	public EducationLevel getEducationLevel() {
-		return educationLevel;
+	public EducationDegree getEducationDegree() {
+		return educationDegree;
 	}
 
-	public void setEducationLevel(EducationLevel educationLevel) {
-		this.educationLevel = educationLevel;
+	public void setEducationDegree(EducationDegree educationDegree) {
+		this.educationDegree = educationDegree;
 	}
 }
