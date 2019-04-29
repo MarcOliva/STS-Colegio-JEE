@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<body>
+
+	<ui:composition template="/WEB-INF/templates/master.xhtml">
+		<ui:define name="content">
+			<h:form id="frm">
+				<p:growl id="men" />
+				<p:toolbar>
+					<f:facet name="right">
+						
+							
+						<p:commandButton value="Guardar" icon="ui-icon-disk"
+							process="@this :frm:panGriQualification"
+							actionListener="#{qualificationController.saveQualification()}"
+							update=":frm:men :frm:datTabQualification :frm:panGriQualification" />
+							
+							
+						<p:commandButton value="Editar" icon="ui-icon-pencil"
+							process="@this"
+							actionListener="#{qualificationController.editQualification()}"
+							update=":frm:men :frm:panGriQualification" />
+					</f:facet>
+				</p:toolbar>
+				<p:panelGrid id="panGriQualification" columns="2" style="width:100%">
+					<p:outputLabel value="Tipo:" for="txtType" />
+					<p:inputText id="txtType" required="true" maxlength="45"
+						value="#{qualificationController.qualification.type}" />
+						
+					<p:outputLabel value="Nota:" for="txtScore" />
+					<p:inputText id="txtScore" required="true" maxlength="45"
+						value="#{qualificationController.qualification.score}" />
+						
+					<p:outputLabel value="Curso:" for="cmbCourse" />
+					<p:selectOneMenu id="cmbCourse" required="true" effect="drop"
+						value="#{qualificationController.course}"
+						converter="omnifaces.SelectItemsConverter">
+						<f:selectItem itemLabel="Seleccione una opción"
+							noSelectionOption="true" itemValue="" />
+						<f:selectItems value="#{qualificationController.courses}"
+							var="Course" itemLabel="#{Course.name}" itemValue="#{Course}" />
+					</p:selectOneMenu>
+					
+					<p:outputLabel value="Profesor:" for="cmbTeacher" />
+					<p:selectOneMenu id="cmbTeacher" required="true" effect="drop"
+						value="#{qualificationController.teacher}"
+						converter="omnifaces.SelectItemsConverter">
+						<f:selectItem itemLabel="Seleccione una opción"
+							noSelectionOption="true" itemValue="" />
+						<f:selectItems value="#{qualificationController.teachers}"
+							var="Teacher" itemLabel="#{Teacher.name} #{Teacher.paternalLastname} #{Teacher.maternalLastname}" itemValue="#{Teacher}" />
+					</p:selectOneMenu>
+					
+					<p:outputLabel value="Alumno:" for="cmbStudent" />
+					<p:selectOneMenu id="cmbStudent" required="true" effect="drop"
+						value="#{qualificationController.student}"
+						converter="omnifaces.SelectItemsConverter">
+						<f:selectItem itemLabel="Seleccione una opción"
+							noSelectionOption="true" itemValue="" />
+						<f:selectItems value="#{qualificationController.students}"
+							var="Student" itemLabel="#{Student.name} #{Student.paternalLastname} #{Student.maternalLastname}" itemValue="#{Student}" />
+					</p:selectOneMenu>			
+				</p:panelGrid>
+				<br></br>
+
+				<p:dataTable id="datTabQualification"
+					emptyMessage="No existen notas registrados"
+					value="#{qualificationController.qualifications}" var="qualification"
+					paginator="true" rows="10" selectionMode="single"
+					rowKey="#{qualification.id}">
+					<f:facet name="header">
+						<p:outputLabel value="Lista de Notas" />
+					</f:facet>
+					<p:ajax event="rowSelect"
+						listener="#{qualificationController.selectQualification}" />
+
+					<p:column headerText="Id">
+						<p:outputLabel value="#{qualification.id}" />
+					</p:column>
+					<p:column headerText="Tipo">
+						<p:outputLabel value="#{qualification.type}" />
+					</p:column>
+					<p:column headerText="Nota">
+						<p:outputLabel value="#{qualification.score}" />
+					</p:column>
+					<p:column headerText="Alumno">
+						<p:outputLabel value="#{qualification.student.name} #{qualification.student.paternalLastname} #{qualification.student.maternalLastname}" />
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+
+</body>
+</html>

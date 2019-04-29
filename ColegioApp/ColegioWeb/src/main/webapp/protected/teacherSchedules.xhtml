@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<body>
+
+	<ui:composition template="/WEB-INF/templates/master.xhtml">
+		<ui:define name="content">
+			<h:form id="frm">
+				<p:growl id="men" />
+				<p:toolbar>
+					<f:facet name="right">
+						
+							
+						<p:commandButton value="Guardar" icon="ui-icon-disk"
+							process="@this :frm:panGriTeacherSchedule"
+							actionListener="#{teacherScheduleController.saveTeacherSchedule()}"
+							update=":frm:men :frm:datTabTeacherSchedule :frm:panGriTeacherSchedule" />
+							
+							
+						<p:commandButton value="Editar" icon="ui-icon-pencil"
+							process="@this"
+							actionListener="#{teacherScheduleController.editTeacherSchedule()}"
+							update=":frm:men :frm:panGriTeacherSchedule" />
+					</f:facet>
+				</p:toolbar>
+				<p:panelGrid id="panGriTeacherSchedule" columns="2" style="width:100%">
+					<p:outputLabel value="Hora Inicio:" for="txtStartTime" />
+					<p:inputText id="txtStartTime" required="true" maxlength="45"
+						value="#{teacherScheduleController.teacherSchedule.startTime}" />
+						
+					<p:outputLabel value="Hora Fin:" for="txtEndTime" />
+					<p:inputText id="txtEndTime" required="true" maxlength="45"
+						value="#{teacherScheduleController.teacherSchedule.endTime}" />
+						
+					<p:outputLabel value="Día:" for="cmbDay" />
+					<p:selectOneMenu id="cmbDay" required="true" effect="drop"
+						value="#{teacherScheduleController.day}"
+						converter="omnifaces.SelectItemsConverter">
+						<f:selectItem itemLabel="Seleccione una opción"
+							noSelectionOption="true" itemValue="" />
+						<f:selectItems value="#{teacherScheduleController.days}"
+							var="Day" itemLabel="#{Day.name}" itemValue="#{Day}" />
+					</p:selectOneMenu>
+					
+					<p:outputLabel value="Curso:" for="cmbCourse" />
+					<p:selectOneMenu id="cmbCourse" required="true" effect="drop"
+						value="#{teacherScheduleController.course}"
+						converter="omnifaces.SelectItemsConverter">
+						<f:selectItem itemLabel="Seleccione una opción"
+							noSelectionOption="true" itemValue="" />
+						<f:selectItems value="#{teacherScheduleController.courses}"
+							var="Course" itemLabel="#{Course.name}" itemValue="#{Course}" />
+					</p:selectOneMenu>
+					
+					<p:outputLabel value="Grado Educativo:" for="cmbEducationDegree" />
+					<p:selectOneMenu id="cmbEducationDegree" required="true" effect="drop"
+						value="#{teacherScheduleController.educationDegree}"
+						converter="omnifaces.SelectItemsConverter">
+						<f:selectItem itemLabel="Seleccione una opción"
+							noSelectionOption="true" itemValue="" />
+						<f:selectItems value="#{teacherScheduleController.educationDegrees}"
+							var="EducationDegree" itemLabel="#{EducationDegree.grade}" itemValue="#{EducationDegree}" />
+					</p:selectOneMenu>
+					
+					<p:outputLabel value="Profesor:" for="cmbTeacher" />
+					<p:selectOneMenu id="cmbTeacher" required="true" effect="drop"
+						value="#{teacherScheduleController.teacher}"
+						converter="omnifaces.SelectItemsConverter">
+						<f:selectItem itemLabel="Seleccione una opción"
+							noSelectionOption="true" itemValue="" />
+						<f:selectItems value="#{teacherScheduleController.teachers}"
+							var="Teacher" itemLabel="#{Teacher.name} #{Teacher.paternalLastname} #{Teacher.maternalLastname}" itemValue="#{Teacher}" />
+					</p:selectOneMenu>
+				</p:panelGrid>
+				<br></br>
+
+				<p:dataTable id="datTabTeacherSchedule"
+					emptyMessage="No existen horarios de profesores registrados"
+					value="#{teacherScheduleController.teacherSchedules}" var="teacherSchedule"
+					paginator="true" rows="10" selectionMode="single"
+					rowKey="#{teacherSchedule.id}">
+					<f:facet name="header">
+						<p:outputLabel value="Lista de horario de profesores" />
+					</f:facet>
+					<p:ajax event="rowSelect"
+						listener="#{teacherScheduleController.selectTeacherSchedule}" />
+
+					<p:column headerText="Id">
+						<p:outputLabel value="#{teacherSchedule.id}" />
+					</p:column>
+					<p:column headerText="Día">
+						<p:outputLabel value="#{teacherSchedule.day.name}" />
+					</p:column>
+					<p:column headerText="Curso">
+						<p:outputLabel value="#{teacherSchedule.course.name}" />
+					</p:column>
+					<p:column headerText="Profesor">
+						<p:outputLabel value="#{teacherSchedule.teacher.name}" />
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+
+</body>
+</html>

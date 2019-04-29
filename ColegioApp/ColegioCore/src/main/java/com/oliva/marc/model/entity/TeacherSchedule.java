@@ -1,7 +1,6 @@
 package com.oliva.marc.model.entity;
 
 import java.io.Serializable;
-import java.sql.Time;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,10 +22,10 @@ public class TeacherSchedule implements Serializable {
 	private Integer id;
 	
 	@Column(name = "start_time", nullable = false)
-	private Time startTime; 
+	private String startTime; 
 	
 	@Column(name = "end_time", nullable = false)
-	private Time endTime;
+	private String endTime;
 	
 	@ManyToOne
 	@JoinColumn(name = "day_id", nullable = false)
@@ -52,19 +51,19 @@ public class TeacherSchedule implements Serializable {
 		this.id = id;
 	}
 
-	public Time getStartTime() {
+	public String getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(Time startTime) {
+	public void setStartTime(String startTime) {
 		this.startTime = startTime;
 	}
 
-	public Time getEndTime() {
+	public String getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(Time endTime) {
+	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
 

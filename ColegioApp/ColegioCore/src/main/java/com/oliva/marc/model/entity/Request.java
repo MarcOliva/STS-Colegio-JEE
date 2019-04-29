@@ -1,7 +1,6 @@
 package com.oliva.marc.model.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,7 +25,7 @@ public class Request implements Serializable {
 	private String description;
 	
 	@Column(name = "date", nullable = false)
-	private Date date;
+	private String date;
 	
 	@Column(name = "status", nullable = false)
 	private boolean status;
@@ -55,11 +54,11 @@ public class Request implements Serializable {
 		this.description = description;
 	}
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 

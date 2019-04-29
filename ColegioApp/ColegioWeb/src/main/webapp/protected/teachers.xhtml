@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<body>
+
+	<ui:composition template="/WEB-INF/templates/master.xhtml">
+		<ui:define name="content">
+			<h:form id="frm">
+				<p:growl id="men" />
+				<p:toolbar>
+					<f:facet name="right">
+						
+							
+						<p:commandButton value="Guardar" icon="ui-icon-disk"
+							process="@this :frm:panGriTeacher"
+							actionListener="#{teacherController.saveTeacher()}"
+							update=":frm:men :frm:datTabTeacher :frm:panGriTeacher" />
+							
+							
+						<p:commandButton value="Editar" icon="ui-icon-pencil"
+							process="@this"
+							actionListener="#{teacherController.editTeacher()}"
+							update=":frm:men :frm:panGriTeacher" />
+					</f:facet>
+				</p:toolbar>
+				<p:panelGrid id="panGriTeacher" columns="2" style="width:100%">
+					<p:outputLabel value="Nombre:" for="txtName" />
+					<p:inputText id="txtName" required="true" maxlength="45"
+						value="#{teacherController.teacher.name}" />
+					
+					<p:outputLabel value="Apellido Paterno:" for="txtPaternalLastname" />
+					<p:inputText id="txtPaternalLastname" required="true" maxlength="45"
+						value="#{teacherController.teacher.paternalLastname}" />
+					
+					<p:outputLabel value="Apellido Materno:" for="txtMaternalLastname" />
+					<p:inputText id="txtMaternalLastname" required="true" maxlength="45"
+						value="#{teacherController.teacher.maternalLastname}" />
+						
+					<p:outputLabel value="Correo:" for="txtEmail" />
+					<p:inputText id="txtEmail" required="true" maxlength="45"
+						value="#{teacherController.teacher.email}" />
+						
+					<p:outputLabel value="DNI:" for="txtDni" />
+					<p:inputText id="txtDni" required="true" maxlength="45"
+						value="#{teacherController.teacher.dni}" />
+						
+					<p:outputLabel value="Teléfono:" for="txtPhone" />
+					<p:inputText id="txtPhone" required="true" maxlength="45"
+						value="#{teacherController.teacher.phone}" />
+					
+					<p:outputLabel value="Grado Educativo:" for="cmbEducationDegree" />
+					<p:selectOneMenu id="cmbEducationDegree" required="true" effect="drop"
+						value="#{teacherController.educationDegree}"
+						converter="omnifaces.SelectItemsConverter">
+						<f:selectItem itemLabel="Seleccione una opción"
+							noSelectionOption="true" itemValue="" />
+						<f:selectItems value="#{teacherController.educationDegrees}"
+							var="EducationDegree" itemLabel="#{EducationDegree.grade}" itemValue="#{EducationDegree}" />
+					</p:selectOneMenu>
+				</p:panelGrid>
+				<br></br>
+
+				<p:dataTable id="datTabTeacher"
+					emptyMessage="No existen profesores registrados"
+					value="#{teacherController.teachers}" var="teacher"
+					paginator="true" rows="10" selectionMode="single"
+					rowKey="#{teacher.id}">
+					<f:facet name="header">
+						<p:outputLabel value="Lista de Profesores" />
+					</f:facet>
+					<p:ajax event="rowSelect"
+						listener="#{teacherController.selectTeacher}" />
+
+					<p:column headerText="Id">
+						<p:outputLabel value="#{teacher.id}" />
+					</p:column>
+					<p:column headerText="Profesor">
+						<p:outputLabel value="#{teacher.name} #{teacher.paternalLastname} #{teacher.maternalLastname}" />
+					</p:column>
+					<p:column headerText="Grado Educativor">
+						<p:outputLabel value="#{teacher.educationDegree.grade}" />
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+
+</body>
+</html>

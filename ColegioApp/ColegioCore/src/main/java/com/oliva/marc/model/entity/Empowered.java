@@ -1,7 +1,6 @@
 package com.oliva.marc.model.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,7 +29,7 @@ public class Empowered implements Serializable {
 	private String maternalLastname;
 	
 	@Column(name = "birthdate", nullable = false)
-	private Date birthdate;
+	private String birthdate;
 	
 	@Column(name = "email", length = 50, nullable = false)
 	private String email;
@@ -73,11 +72,11 @@ public class Empowered implements Serializable {
 		this.maternalLastname = maternalLastname;
 	}
 
-	public Date getBirthdate() {
+	public String getBirthdate() {
 		return birthdate;
 	}
 
-	public void setBirthdate(Date birthdate) {
+	public void setBirthdate(String birthdate) {
 		this.birthdate = birthdate;
 	}
 
