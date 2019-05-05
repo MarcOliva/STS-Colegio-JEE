@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<body>
+
+	<ui:composition template="/WEB-INF/templates/master.xhtml">
+		<ui:define name="content">
+			<h:form id="frm">
+				<p:growl id="men" />
+				<p:toolbar>
+					<f:facet name="right">
+						
+							
+						<p:commandButton value="Guardar" icon="ui-icon-disk"
+							process="@this :frm:panGriCourse"
+							actionListener="#{courseController.saveCourse()}"
+							update=":frm:men :frm:datTabCourse :frm:panGriCourse" />
+							
+							
+						<p:commandButton value="Editar" icon="ui-icon-pencil"
+							process="@this"
+							actionListener="#{courseController.editCourse()}"
+							update=":frm:men :frm:panGriCourse" />
+					</f:facet>
+				</p:toolbar>
+				<p:panelGrid id="panGriCourse" columns="2" style="width:100%">
+					<p:outputLabel value="Nombre:" for="txtName" />
+					<p:inputText id="txtName" required="true" maxlength="45"
+						value="#{courseController.course.name}" />
+						
+					<p:outputLabel value="Nivel Educativo:" for="txtEducationLevel" />
+					<p:inputText id="txtEducationLevel" required="true" maxlength="45"
+						value="#{courseController.course.educationLevel}" />
+				</p:panelGrid>
+				<br></br>
+
+				<p:dataTable id="datTabCourse"
+					emptyMessage="No existen cursos registrados"
+					value="#{courseController.courses}" var="course"
+					paginator="true" rows="10" selectionMode="single"
+					rowKey="#{course.id}">
+					<f:facet name="header">
+						<p:outputLabel value="Lista de Cursos" />
+					</f:facet>
+					<p:ajax event="rowSelect"
+						listener="#{courseController.selectCourse}" />
+
+					<p:column headerText="Id">
+						<p:outputLabel value="#{course.id}" />
+					</p:column>
+					<p:column headerText="Nombre">
+						<p:outputLabel value="#{course.name}" />
+					</p:column>
+					<p:column headerText="Nivel Educativo">
+						<p:outputLabel value="#{course.educationLevel}" />
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+
+</body>
+</html>

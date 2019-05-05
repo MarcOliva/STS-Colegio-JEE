@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title><ui:insert name="pageTitle">Page Title</ui:insert></title>
+</h:head>
+
+<body>
+	<ui:insert name="header">
+		<h:form>
+			<p:menubar autoDisplay="false">
+
+				<p:submenu label="Sistema" icon="ui-icon-pencil">
+				
+					<p:menuitem icon="ui-icon-document" value="Días"
+						url="/protected/days.xhtml" />
+						
+					<p:menuitem icon="ui-icon-document" value="Grados Educativos"
+						url="/protected/educationDegrees.xhtml" />
+						
+					<p:menuitem icon="ui-icon-document" value="Cursos"
+						url="/protected/courses.xhtml" />
+						
+					<p:menuitem icon="ui-icon-document" value="Profesores"
+						url="/protected/teachers.xhtml" />
+						
+					<p:menuitem icon="ui-icon-document" value="Horarios Profesor"
+						url="/protected/teacherSchedules.xhtml" />
+						
+					<p:menuitem icon="ui-icon-document" value="Apoderados"
+						url="/protected/empowereds.xhtml" />
+						
+					<p:menuitem icon="ui-icon-document" value="Alumnos"
+						url="/protected/students.xhtml" />
+						
+					<p:menuitem icon="ui-icon-document" value="Horarios Alumno"
+						url="/protected/studentSchedules.xhtml" />
+						
+					<p:menuitem icon="ui-icon-document" value="Notas"
+						url="/protected/qualifications.xhtml" />
+
+				</p:submenu>
+
+			
+
+			</p:menubar>
+		</h:form>
+	</ui:insert>
+
+	<ui:insert name="content">
+
+	</ui:insert>
+
+
+	<ui:insert name="footer">
+		<div>Copyright © DSEL, 2019. Todos los derechos reservados</div>
+	</ui:insert>
+</body>
+
+</html>

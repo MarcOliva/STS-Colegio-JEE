@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<body>
+
+	<ui:composition template="/WEB-INF/templates/master.xhtml">
+		<ui:define name="content">
+			<h:form id="frm">
+				<p:growl id="men" />
+				<p:toolbar>
+					<f:facet name="right">
+						
+							
+						<p:commandButton value="Guardar" icon="ui-icon-disk"
+							process="@this :frm:panGriEmpowered"
+							actionListener="#{empoweredController.saveEmpowered()}"
+							update=":frm:men :frm:datTabEmpowered :frm:panGriEmpowered" />
+							
+							
+						<p:commandButton value="Editar" icon="ui-icon-pencil"
+							process="@this"
+							actionListener="#{empoweredController.editEmpowered()}"
+							update=":frm:men :frm:panGriEmpowered" />
+					</f:facet>
+				</p:toolbar>
+				<p:panelGrid id="panGriEmpowered" columns="2" style="width:100%">
+					<p:outputLabel value="Nombre:" for="txtName" />
+					<p:inputText id="txtName" required="true" maxlength="45"
+						value="#{empoweredController.empowered.name}" />
+						
+					<p:outputLabel value="Apellido Paterno:" for="txtPaternalLastname" />
+					<p:inputText id="txtPaternalLastname" required="true" maxlength="45"
+						value="#{empoweredController.empowered.paternalLastname}" />
+						
+					<p:outputLabel value="Apellido Materno:" for="txtMaternalLastname" />
+					<p:inputText id="txtMaternalLastname" required="true" maxlength="45"
+						value="#{empoweredController.empowered.maternalLastname}" />
+						
+					<p:outputLabel value="Fecha de nacimiento:" for="txtBirthdate" />
+					<p:inputText id="txtBirthdate" required="true" maxlength="45"
+						value="#{empoweredController.empowered.birthdate}" />
+						
+					<p:outputLabel value="Correo:" for="txtEmail" />
+					<p:inputText id="txtEmail" required="true" maxlength="45"
+						value="#{empoweredController.empowered.email}" />
+						
+					<p:outputLabel value="DNI:" for="txtDni" />
+					<p:inputText id="txtDni" required="true" maxlength="45"
+						value="#{empoweredController.empowered.dni}" />
+						
+					<p:outputLabel value="Teléfono:" for="txtPhone" />
+					<p:inputText id="txtPhone" required="true" maxlength="45"
+						value="#{empoweredController.empowered.phone}" />
+				</p:panelGrid>
+				<br></br>
+
+				<p:dataTable id="datTabEmpowered"
+					emptyMessage="No existen apoderados registrados"
+					value="#{empoweredController.empowereds}" var="empowered"
+					paginator="true" rows="10" selectionMode="single"
+					rowKey="#{empowered.id}">
+					<f:facet name="header">
+						<p:outputLabel value="Lista de Apoderados" />
+					</f:facet>
+					<p:ajax event="rowSelect"
+						listener="#{empoweredController.selectEmpowered}" />
+
+					<p:column headerText="Id">
+						<p:outputLabel value="#{empowered.id}" />
+					</p:column>
+					<p:column headerText="Nombre">
+						<p:outputLabel value="#{empowered.name}" />
+					</p:column>
+					<p:column headerText="Apellido Paterno">
+						<p:outputLabel value="#{empowered.paternalLastname}" />
+					</p:column>
+					<p:column headerText="Apellido Materno">
+						<p:outputLabel value="#{empowered.maternalLastname}" />
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+
+</body>
+</html>

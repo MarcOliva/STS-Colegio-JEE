@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<body>
+
+	<ui:composition template="/WEB-INF/templates/master.xhtml">
+		<ui:define name="content">
+			<h:form id="frm">
+				<p:growl id="men" />
+				<p:toolbar>
+					<f:facet name="right">
+						
+							
+						<p:commandButton value="Guardar" icon="ui-icon-disk"
+							process="@this :frm:panGriStudent"
+							actionListener="#{studentController.saveStudent()}"
+							update=":frm:men :frm:datTabStudent :frm:panGriStudent" />
+							
+							
+						<p:commandButton value="Editar" icon="ui-icon-pencil"
+							process="@this"
+							actionListener="#{studentController.editStudent()}"
+							update=":frm:men :frm:panGriStudent" />
+					</f:facet>
+				</p:toolbar>
+				<p:panelGrid id="panGriStudent" columns="2" style="width:100%">
+					<p:outputLabel value="Nombre:" for="txtName" />
+					<p:inputText id="txtName" required="true" maxlength="45"
+						value="#{studentController.student.name}" />
+						
+					<p:outputLabel value="Apellido Paterno:" for="txtPaternalLastname" />
+					<p:inputText id="txtPaternalLastname" required="true" maxlength="45"
+						value="#{studentController.student.paternalLastname}" />
+						
+					<p:outputLabel value="Apellido Materno:" for="txtMaternalLastname" />
+					<p:inputText id="txtMaternalLastname" required="true" maxlength="45"
+						value="#{studentController.student.maternalLastname}" />
+						
+					<p:outputLabel value="DNI:" for="txtDni" />
+					<p:inputText id="txtDni" required="true" maxlength="45"
+						value="#{studentController.student.dni}" />
+						
+					<p:outputLabel value="Apoderado:" for="cmbEmpowered" />
+					<p:selectOneMenu id="cmbEmpowered" required="true" effect="drop"
+						value="#{studentController.empowered}"
+						converter="omnifaces.SelectItemsConverter">
+						<f:selectItem itemLabel="Seleccione una opción"
+							noSelectionOption="true" itemValue="" />
+						<f:selectItems value="#{studentController.empowereds}"
+							var="Empowered" itemLabel="#{Empowered.name} #{Empowered.paternalLastname} #{Empowered.maternalLastname}" itemValue="#{Empowered}" />
+					</p:selectOneMenu>
+					
+					<p:outputLabel value="Grado Educativo:" for="cmbEducationDegree" />
+					<p:selectOneMenu id="cmbEducationDegree" required="true" effect="drop"
+						value="#{studentController.educationDegree}"
+						converter="omnifaces.SelectItemsConverter">
+						<f:selectItem itemLabel="Seleccione una opción"
+							noSelectionOption="true" itemValue="" />
+						<f:selectItems value="#{studentController.educationDegrees}"
+							var="EducationDegree" itemLabel="#{EducationDegree.grade}" itemValue="#{EducationDegree}" />
+					</p:selectOneMenu>			
+				</p:panelGrid>
+				<br></br>
+
+				<p:dataTable id="datTabStudent"
+					emptyMessage="No existen alumnos registrados"
+					value="#{studentController.students}" var="student"
+					paginator="true" rows="10" selectionMode="single"
+					rowKey="#{student.id}">
+					<f:facet name="header">
+						<p:outputLabel value="Lista de Alumnos" />
+					</f:facet>
+					<p:ajax event="rowSelect"
+						listener="#{studentController.selectStudent}" />
+
+					<p:column headerText="Id">
+						<p:outputLabel value="#{student.id}" />
+					</p:column>
+					<p:column headerText="Alumno">
+						<p:outputLabel value="#{student.name} #{student.paternalLastname} #{student.maternalLastname}" />
+					</p:column>
+					<p:column headerText="Grado Educativo">
+						<p:outputLabel value="#{student.educationDegree.grade}" />
+					</p:column>
+					<p:column headerText="Apoderado">
+						<p:outputLabel value="#{student.empowered.name} #{student.empowered.paternalLastname} #{student.empowered.maternalLastname}" />
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+
+</body>
+</html>

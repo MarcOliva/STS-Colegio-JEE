@@ -5,6 +5,7 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/target/generated-sources/annotations"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/Java"/>
         <dependent-module archiveName="ColegioCore-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ColegioCore/ColegioCore">
             <dependency-type>uses</dependency-type>
         </dependent-module>

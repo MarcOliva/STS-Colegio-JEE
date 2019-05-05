@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<body>
+
+	<ui:composition template="/WEB-INF/templates/master.xhtml">
+		<ui:define name="content">
+			<h:form id="frm">
+				<p:growl id="men" />
+				<p:toolbar>
+					<f:facet name="right">
+						
+							
+						<p:commandButton value="Guardar" icon="ui-icon-disk"
+							process="@this :frm:panGriAssistance"
+							actionListener="#{assistanceController.saveAssistance()}"
+							update=":frm:men :frm:datTabAssistance :frm:panGriAssistance" />
+							
+							
+						<p:commandButton value="Editar" icon="ui-icon-pencil"
+							process="@this"
+							actionListener="#{assistanceController.editAssistance()}"
+							update=":frm:men :frm:panGriAssistance" />
+					</f:facet>
+				</p:toolbar>
+				<p:panelGrid id="panGriAssistance" columns="2" style="width:100%">
+					<p:outputLabel value="Fecha:" for="txtDate" />
+					<p:inputText id="txtDate" required="true" maxlength="45"
+						value="#{assistanceController.assistance.date}" />
+						
+					<p:outputLabel value="Alumno:" for="cmbStudent" />
+					<p:selectOneMenu id="cmbStudent" required="true" effect="drop"
+						value="#{assistanceController.student}"
+						converter="omnifaces.SelectItemsConverter">
+						<f:selectItem itemLabel="Seleccione una opción"
+							noSelectionOption="true" itemValue="" />
+						<f:selectItems value="#{assistanceController.students}"
+							var="Student" itemLabel="#{Student.name} #{Student.paternalLastname} #{Student.maternalLastname}" itemValue="#{Student}" />
+					</p:selectOneMenu>
+						
+					<p:outputLabel value="Asistió:" for="txtAttended" />
+					<p:inputText id="txtAttended" required="true" maxlength="45"
+						value="#{assistanceController.assistance.attended}" />
+					
+					<p:outputLabel value="Horario Profesor:" for="cmbTeacherSchedule" />
+					<p:selectOneMenu id="cmbTeacherSchedule" required="true" effect="drop"
+						value="#{assistanceController.teacherSchedule}"
+						converter="omnifaces.SelectItemsConverter">
+						<f:selectItem itemLabel="Seleccione una opción"
+							noSelectionOption="true" itemValue="" />
+						<f:selectItems value="#{assistanceController.teacherSchedules}"
+							var="TeacherSchedule" itemLabel="#{TeacherSchedule.course.name}" itemValue="#{TeacherSchedule}" />
+					</p:selectOneMenu>				
+				</p:panelGrid>
+				<br></br>
+
+				<p:dataTable id="datTabAssistance"
+					emptyMessage="No existen asistencias registrados"
+					value="#{assistanceController.assistances}" var="assistance"
+					paginator="true" rows="10" selectionMode="single"
+					rowKey="#{assistance.id}">
+					<f:facet name="header">
+						<p:outputLabel value="Lista de Asistencias" />
+					</f:facet>
+					<p:ajax event="rowSelect"
+						listener="#{assistanceController.selectAssistance}" />
+
+					<p:column headerText="Id">
+						<p:outputLabel value="#{assistance.id}" />
+					</p:column>
+					<p:column headerText="Fecha">
+						<p:outputLabel value="#{assistance.date}" />
+					</p:column>
+					<p:column headerText="Alumno">
+						<p:outputLabel value="#{assistance.student.name} #{assistance.student.paternalLastname} #{assistance.student.maternalLastname}" />
+					</p:column>
+					<p:column headerText="Asistió">
+						<p:outputLabel value="#{assistance.attended}" />
+					</p:column>
+					<p:column headerText="Curso">
+						<p:outputLabel value="#{assistance.teacherSchedule.course.name}" />
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+
+</body>
+</html>

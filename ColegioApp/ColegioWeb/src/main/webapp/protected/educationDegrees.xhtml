@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<body>
+
+	<ui:composition template="/WEB-INF/templates/master.xhtml">
+		<ui:define name="content">
+			<h:form id="frm">
+				<p:growl id="men" />
+				<p:toolbar>
+					<f:facet name="right">
+						
+							
+						<p:commandButton value="Guardar" icon="ui-icon-disk"
+							process="@this :frm:panGriEducationDegree"
+							actionListener="#{educationDegreeController.saveEducationDegree()}"
+							update=":frm:men :frm:datTabEducationDegree :frm:panGriEducationDegree" />
+							
+							
+						<p:commandButton value="Editar" icon="ui-icon-pencil"
+							process="@this"
+							actionListener="#{educationDegreeController.editEducationDegree()}"
+							update=":frm:men :frm:panGriEducationDegree" />
+					</f:facet>
+				</p:toolbar>
+				<p:panelGrid id="panGriEducationDegree" columns="2" style="width:100%">
+					<p:outputLabel value="Grado:" for="txtGrade" />
+					<p:inputText id="txtGrade" required="true" maxlength="45"
+						value="#{educationDegreeController.educationDegree.grade}" />
+						
+						<p:outputLabel value="Nivel Educativo:" for="txtEducationLevel" />
+					<p:inputText id="txtEducationLevel" required="true" maxlength="45"
+						value="#{educationDegreeController.educationDegree.educationLevel}" />
+				</p:panelGrid>
+				<br></br>
+
+				<p:dataTable id="datTabEducationDegree"
+					emptyMessage="No existen grados educativos registrados"
+					value="#{educationDegreeController.educationDegrees}" var="educationdegree"
+					paginator="true" rows="10" selectionMode="single"
+					rowKey="#{educationdegree.id}">
+					<f:facet name="header">
+						<p:outputLabel value="Lista de Grados Educativos" />
+					</f:facet>
+					<p:ajax event="rowSelect"
+						listener="#{educationDegreeController.selectEducationDegree}" />
+
+					<p:column headerText="Id">
+						<p:outputLabel value="#{educationdegree.id}" />
+					</p:column>
+					<p:column headerText="Grado Educativo">
+						<p:outputLabel value="#{educationdegree.grade}" />
+					</p:column>
+					<p:column headerText="Nivel Educativo">
+						<p:outputLabel value="#{educationdegree.educationLevel}" />
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+
+</body>
+</html>
